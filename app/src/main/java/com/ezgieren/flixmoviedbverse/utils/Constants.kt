@@ -6,6 +6,17 @@ object Constants {
     const val BASE_URL = BuildConfig.BASE_URL
     const val API_KEY = BuildConfig.API_KEY
 
+    // Database
+    object Database {
+        const val MOVIES_TABLE = "movies"
+        const val DATABASE_NAME = "flixmoviedbverse_db"
+    }
+
+    object QueryConstants {
+        const val SELECT_ALL_MOVIES = "SELECT * FROM movies"
+        const val DELETE_ALL_MOVIES = "DELETE FROM movies"
+    }
+
     // Endpoints
     object Endpoints {
         const val POPULAR_MOVIES = "movie/popular"

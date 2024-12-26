@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ezgieren.flixmoviedbverse.data.model.Movie
 import com.ezgieren.flixmoviedbverse.domain.repository.MovieRepository
-import com.ezgieren.flixmoviedbverse.utils.Constants
 import com.ezgieren.flixmoviedbverse.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
