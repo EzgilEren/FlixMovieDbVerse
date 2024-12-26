@@ -27,7 +27,11 @@ fun MovieListScreen(viewModel: MovieViewModel) {
             LazyColumn {
                 items(movies) { movie ->
                     Column(modifier = Modifier.padding(16.dp)) {
-                        UIExtensions.CustomText(text = movie.title, fontSize = 20, fontWeight = FontWeight.Bold)
+                        UIExtensions.CustomText(
+                            text = movie.title,
+                            fontSize = 20,
+                            fontWeight = FontWeight.Bold
+                        )
                         UIExtensions.MediumSpacer()
                         UIExtensions.CustomText(text = movie.overview)
                         UIExtensions.CustomDivider()
@@ -37,7 +41,9 @@ fun MovieListScreen(viewModel: MovieViewModel) {
         }
         is Resource.Error -> {
             val errorMessage = (movieState as Resource.Error<List<Movie>>).message
-            UIExtensions.ErrorText(message = errorMessage ?: Constants.ErrorMessages.GENERIC_ERROR)
+            UIExtensions.ErrorText(
+                message = errorMessage ?: Constants.ErrorMessages.GENERIC_ERROR
+            )
         }
     }
 }

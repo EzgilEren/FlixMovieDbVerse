@@ -5,6 +5,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -13,6 +17,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.ezgieren.flixmoviedbverse.presentation.view.MovieListScreen
+import com.ezgieren.flixmoviedbverse.presentation.viewmodel.MovieViewModel
+import com.ezgieren.flixmoviedbverse.utils.Constants
 
 object UIExtensions {
     // Spacer Extensions
@@ -105,6 +112,62 @@ object UIExtensions {
             contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+        }
+    }
+
+    //Tab Row
+    @Composable
+    fun CustomTabRow(
+        tabs: List<String>,
+        selectedTabIndex: Int,
+        onTabSelected: (Int) -> Unit
+    ) {
+        TabRow(selectedTabIndex = selectedTabIndex) {
+            tabs.forEachIndexed { index, tab ->
+                Tab(
+                    selected = selectedTabIndex == index,
+                    onClick = { onTabSelected(index) },
+                    text = { Text(tab) }
+                )
+            }
+        }
+    }
+
+    @Composable
+    fun MovieTabs(viewModel: MovieViewModel) {
+        val tabs = listOf(
+            Constants.MovieCategories.POPULAR,
+            Constants.MovieCategories.TOP_RATED,
+            Constants.MovieCategories.UPCOMING,
+            Constants.MovieCategories.NOW_PLAYING,
+            Constants.MovieCategories.TRENDING
+        )
+        var selectedTabIndex by remember { mutableStateOf(0) }
+
+        Column {
+            // Tab bar
+            TabRow(selectedTabIndex = selectedTabIndex) {
+                tabs.forEachIndexed { index, tab ->
+                    Tab(
+                        selected = selectedTabIndex == index,
+                        onClick = { selectedTabIndex = index },
+                        text = { Text(tab) }
+                    )
+                }
+            }
+
+            // Switch case for each tab
+            when (selectedTabIndex) {
+                0 -> viewModel.fetchMovies() // Popular
+                1 -> viewModel.fetchTopRatedMovies() // Top Rated
+                2 -> viewModel.fetchUpcomingMovies() // Upcoming
+                3 -> viewModel.fetchNowPlayingMovies() // Now Playing
+                4 -> viewModel.fetchTrendingMovies() // Trending
+                5 -> viewModel.fetchLanguages() // Languages
+                6 -> viewModel.fetchGenres() // Genres
+            }
+
+            MovieListScreen(viewModel = viewModel)
         }
     }
 

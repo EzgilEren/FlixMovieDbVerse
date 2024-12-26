@@ -18,7 +18,7 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
-        return OkHttpClient.Builder().build()
+        return OkHttpClient.Builder().addInterceptor(ApiKeyInterceptor()).build()
     }
 
     @Provides

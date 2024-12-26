@@ -21,6 +21,31 @@ object Constants {
     object Endpoints {
         const val POPULAR_MOVIES = "movie/popular"
         const val MOVIE_DETAILS = "movie/{movie_id}"
+        const val TOP_RATED_MOVIES = "movie/top_rated"
+        const val UPCOMING_MOVIES = "movie/upcoming"
+        const val NOW_PLAYING_MOVIES = "movie/now_playing"
+        const val TRENDING_MOVIES = "trending/movie/day"
+        const val GENRES = "genre/movie/list"
+        const val LANGUAGES = "configuration/languages"
+    }
+
+    object EndpointSettings {
+        val requiresPage = listOf(
+            Endpoints.POPULAR_MOVIES,
+            Endpoints.TOP_RATED_MOVIES,
+            Endpoints.UPCOMING_MOVIES,
+            Endpoints.NOW_PLAYING_MOVIES,
+            Endpoints.TRENDING_MOVIES
+        )
+    }
+
+    //Movie Categories
+    object MovieCategories {
+        const val POPULAR = "Popular"
+        const val TOP_RATED = "Top Rated"
+        const val UPCOMING = "Upcoming"
+        const val NOW_PLAYING = "Now Playing"
+        const val TRENDING = "Trending"
     }
 
     // Error Messages

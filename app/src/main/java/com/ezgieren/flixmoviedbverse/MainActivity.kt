@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -14,6 +15,7 @@ import androidx.compose.ui.Modifier
 import com.ezgieren.flixmoviedbverse.data.remote.RetrofitClient
 import com.ezgieren.flixmoviedbverse.presentation.view.MovieListScreen
 import com.ezgieren.flixmoviedbverse.presentation.viewmodel.MovieViewModel
+import com.ezgieren.flixmoviedbverse.ui.UIExtensions
 import com.ezgieren.flixmoviedbverse.ui.theme.FlixMovieDbVerseTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -28,11 +30,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             FlixMovieDbVerseTheme {
-                MovieListScreen(viewModel = movieViewModel)
+                Column {
+                    UIExtensions.MovieTabs(viewModel = movieViewModel)
+                }
             }
         }
-
-        movieViewModel.fetchMovies()
     }
 }
 
@@ -45,7 +47,7 @@ fun MovieDataScreen() {
         scope.launch {
             try {
                 val response = withContext(Dispatchers.IO) {
-                    RetrofitClient.instance.getPopularMovies(BuildConfig.API_KEY)
+                    RetrofitClient.instance.getPopularMovies()
                 }
                 if (response.isSuccessful) {
                     val movies = response.body()?.results?.joinToString("\n") { it.title }
