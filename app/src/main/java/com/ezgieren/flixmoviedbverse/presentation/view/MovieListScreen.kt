@@ -15,7 +15,7 @@ import com.ezgieren.flixmoviedbverse.presentation.viewmodel.MovieViewModel
 import com.ezgieren.flixmoviedbverse.ui.UIExtensions
 import com.ezgieren.flixmoviedbverse.utils.Constants
 import com.ezgieren.flixmoviedbverse.utils.Resource
-
+/*
 @Composable
 fun MovieListScreen(viewModel: MovieViewModel) {
     val movieState by viewModel.movieState.collectAsState()
@@ -47,3 +47,4 @@ fun MovieListScreen(viewModel: MovieViewModel) {
         }
     }
 }
+ */

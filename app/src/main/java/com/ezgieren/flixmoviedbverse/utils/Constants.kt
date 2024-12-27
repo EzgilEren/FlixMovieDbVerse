@@ -29,6 +29,10 @@ object Constants {
         const val LANGUAGES = "configuration/languages"
     }
 
+    object ApiParameters {
+        const val MOVIE_ID = "movie_id"
+    }
+
     object EndpointSettings {
         val requiresPage = listOf(
             Endpoints.POPULAR_MOVIES,
