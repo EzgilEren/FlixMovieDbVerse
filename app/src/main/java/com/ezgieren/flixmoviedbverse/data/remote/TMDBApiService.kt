@@ -5,26 +5,37 @@ import com.ezgieren.flixmoviedbverse.data.model.MovieDetails
 import com.ezgieren.flixmoviedbverse.data.model.PopularMoviesResponse
 import com.ezgieren.flixmoviedbverse.data.model.SpokenLanguage
 import com.ezgieren.flixmoviedbverse.utils.Constants
-import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface TMDBApiService {
+
     @GET(Constants.Endpoints.POPULAR_MOVIES)
-    suspend fun getPopularMovies(): Response<PopularMoviesResponse>
+    suspend fun getPopularMovies(
+        @Query(Constants.ApiParameters.PAGE) page: Int = 1 // Default page is 1
+    ): Response<PopularMoviesResponse>
 
     @GET(Constants.Endpoints.TOP_RATED_MOVIES)
-    suspend fun getTopRatedMovies(): Response<PopularMoviesResponse>
+    suspend fun getTopRatedMovies(
+        @Query(Constants.ApiParameters.PAGE) page: Int = 1 // Default page is 1
+    ): Response<PopularMoviesResponse>
 
     @GET(Constants.Endpoints.UPCOMING_MOVIES)
-    suspend fun getUpcomingMovies(): Response<PopularMoviesResponse>
+    suspend fun getUpcomingMovies(
+        @Query(Constants.ApiParameters.PAGE) page: Int = 1 // Default page is 1
+    ): Response<PopularMoviesResponse>
 
     @GET(Constants.Endpoints.NOW_PLAYING_MOVIES)
-    suspend fun getNowPlayingMovies(): Response<PopularMoviesResponse>
+    suspend fun getNowPlayingMovies(
+        @Query(Constants.ApiParameters.PAGE) page: Int = 1 // Default page is 1
+    ): Response<PopularMoviesResponse>
 
     @GET(Constants.Endpoints.TRENDING_MOVIES)
-    suspend fun getTrendingMovies(): Response<PopularMoviesResponse>
+    suspend fun getTrendingMovies(
+        @Query(Constants.ApiParameters.PAGE) page: Int = 1 // Default page is 1
+    ): Response<PopularMoviesResponse>
 
     @GET(Constants.Endpoints.MOVIE_DETAILS)
     suspend fun getMovieDetails(
@@ -36,10 +47,4 @@ interface TMDBApiService {
 
     @GET(Constants.Endpoints.LANGUAGES)
     suspend fun getLanguages(): Response<List<SpokenLanguage>>
-
-    //TODO: delete this method created fot testing
-    @GET(Constants.Endpoints.MOVIE_DETAILS)
-    suspend fun testGetMovieDetails(
-        @Path("movie_id") movieId: Int
-    ): Response<ResponseBody>
 }

@@ -81,4 +81,8 @@ dependencies {
 
     // OkHttp
     implementation(libs.okhttp.logging.interceptor)
+
+    // Paging
+    implementation (libs.paging.compose)
+    implementation (libs.paging.runtime)
 }

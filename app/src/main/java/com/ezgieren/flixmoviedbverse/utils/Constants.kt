@@ -30,17 +30,8 @@ object Constants {
     }
 
     object ApiParameters {
+        const val PAGE = "page"
         const val MOVIE_ID = "movie_id"
-    }
-
-    object EndpointSettings {
-        val requiresPage = listOf(
-            Endpoints.POPULAR_MOVIES,
-            Endpoints.TOP_RATED_MOVIES,
-            Endpoints.UPCOMING_MOVIES,
-            Endpoints.NOW_PLAYING_MOVIES,
-            Endpoints.TRENDING_MOVIES
-        )
     }
 
     //Movie Categories
@@ -60,6 +51,11 @@ object Constants {
         fun detailedError(code: Int, message: String): String {
             return "Error Code: $code, Message: $message"
         }
+    }
+
+    object UiConstants {
+        const val DEFAULT_PADDING = 16
+        const val CORNER_RADIUS = 12
     }
 
     // General Messages

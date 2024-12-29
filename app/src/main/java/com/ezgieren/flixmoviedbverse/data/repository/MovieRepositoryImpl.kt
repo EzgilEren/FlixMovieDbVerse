@@ -1,10 +1,12 @@
 package com.ezgieren.flixmoviedbverse.data.repository
 
+import androidx.paging.PagingSource
 import com.ezgieren.flixmoviedbverse.data.local.MovieDao
 import com.ezgieren.flixmoviedbverse.data.model.Genre
 import com.ezgieren.flixmoviedbverse.data.model.Movie
 import com.ezgieren.flixmoviedbverse.data.model.MovieDetails
 import com.ezgieren.flixmoviedbverse.data.model.SpokenLanguage
+import com.ezgieren.flixmoviedbverse.data.paging.MoviePagingSource
 import com.ezgieren.flixmoviedbverse.data.remote.TMDBApiService
 import com.ezgieren.flixmoviedbverse.domain.repository.MovieRepository
 import com.ezgieren.flixmoviedbverse.utils.Constants
@@ -94,5 +96,10 @@ class MovieRepositoryImpl @Inject constructor(
             onSuccess = { it },
             onFailure = { Constants.ErrorMessages.GENERIC_ERROR }
         )
+    }
+
+    // Get paging movies
+    override fun getPagedMovies(category: String): PagingSource<Int, Movie> {
+        return MoviePagingSource(apiService, category)
     }
 }

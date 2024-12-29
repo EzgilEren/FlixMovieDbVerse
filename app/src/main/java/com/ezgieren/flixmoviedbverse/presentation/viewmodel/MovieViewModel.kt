@@ -2,10 +2,17 @@ package com.ezgieren.flixmoviedbverse.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ezgieren.flixmoviedbverse.data.model.*
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.ezgieren.flixmoviedbverse.data.model.Genre
+import com.ezgieren.flixmoviedbverse.data.model.Movie
+import com.ezgieren.flixmoviedbverse.data.model.MovieDetails
 import com.ezgieren.flixmoviedbverse.domain.repository.MovieRepository
 import com.ezgieren.flixmoviedbverse.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -28,27 +35,30 @@ class MovieViewModel @Inject constructor(
     // Fetch Popular Movies
     fun fetchPopularMovies() {
         viewModelScope.launch {
-            _popularMovies.value = Resource.Loading()
-            val result = repository.getPopularMovies()
-            _popularMovies.value = result
+            _popularMovies.value = repository.getPopularMovies()
+
         }
     }
 
     // Fetch Genres
     fun fetchGenres() {
         viewModelScope.launch {
-            _genres.value = Resource.Loading()
-            val result = repository.getGenres()
-            _genres.value = result
+            _genres.value = repository.getGenres()
         }
     }
 
     // Fetch Movie Details
     fun fetchMovieDetails(movieId: Int) {
         viewModelScope.launch {
-            _movieDetails.value = Resource.Loading()
-            val result = repository.getMovieDetails(movieId)
-            _movieDetails.value = result
+            _movieDetails.value = repository.getMovieDetails(movieId)
         }
+    }
+
+    // Get paging movies
+    fun getPagedMovies(category: String): Flow<PagingData<Movie>> {
+        return Pager(
+            config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+            pagingSourceFactory = { repository.getPagedMovies(category) }
+        ).flow.cachedIn(viewModelScope)
     }
 }
