@@ -61,6 +61,8 @@ dependencies {
     // Hilt for Dependency Injection
     implementation(libs.hilt.android)
     implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(libs.androidx.navigation.compose)
     ksp(libs.hilt.compiler)
 
     // Retrofit & Gson for API calls

@@ -1,56 +1,75 @@
 package com.ezgieren.flixmoviedbverse.ui.components
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberAsyncImagePainter
 import com.ezgieren.flixmoviedbverse.data.model.Movie
+import com.ezgieren.flixmoviedbverse.ui.UIExtensions.CustomImage
+import com.ezgieren.flixmoviedbverse.ui.UIExtensions.CustomText
+import com.ezgieren.flixmoviedbverse.ui.theme.AppColors
+import com.ezgieren.flixmoviedbverse.ui.theme.ChristmasColors
+import com.ezgieren.flixmoviedbverse.utils.Constants
 
 @Composable
-fun MovieCard(movie: Movie, onClick: () -> Unit) {
+fun MovieCard(
+    movie: Movie,
+    trend: String = "",
+    isHolidayTheme: Boolean,
+    onClick: (Int) -> Unit
+) {
     Card(
-        onClick = onClick,
-        shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(4.dp),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(16.dp)
+            .clickable { onClick(movie.id) },
+        shape = RoundedCornerShape(12.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = if (isHolidayTheme) ChristmasColors.HolidayBackground else AppColors.Background
+        )
     ) {
-        Row(modifier = Modifier.padding(8.dp)) {
-            Image(
-                painter = rememberAsyncImagePainter(model = "https://image.tmdb.org/t/p/w500${movie.posterPath}"),
-                contentDescription = movie.title,
-                modifier = Modifier
-                    .size(100.dp)
-                    .padding(end = 8.dp),
-                contentScale = ContentScale.Crop
-            )
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-            ) {
-                Text(
-                    text = movie.title,
-                    style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
-                    maxLines = 1
+        Column(modifier = Modifier.padding(12.dp)) {
+            if (trend.isNotEmpty()) {
+                CustomText(
+                    text = trend,
+                    style = MaterialTheme.typography.labelMedium.copy(color = ChristmasColors.Red),
+                    modifier = Modifier.padding(bottom = 4.dp)
                 )
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = movie.overview ?: "No overview available",
-                    style = MaterialTheme.typography.bodyMedium,
-                    maxLines = 3
+            }
+            Row {
+                CustomImage(
+                    imageUrl = "${Constants.IMAGE_BASE_URL}${movie.posterPath.orEmpty()}",
+                    contentDescription = Constants.GeneralMessages.POSTER_DESCRIPTION.format(movie.title),
+                    modifier = Modifier
+                        .width(100.dp)
+                        .height(150.dp)
+                        .clip(RoundedCornerShape(12.dp))
                 )
+                Column(modifier = Modifier.padding(start = 16.dp)) {
+                    CustomText(
+                        text = movie.title,
+                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.Bold,
+                        color = if (isHolidayTheme) ChristmasColors.Red else AppColors.Primary
+                    )
+                    CustomText(
+                        text = movie.overview,
+                        style = MaterialTheme.typography.bodyMedium,
+                        maxLines = 3
+                    )
+                }
             }
         }
     }
