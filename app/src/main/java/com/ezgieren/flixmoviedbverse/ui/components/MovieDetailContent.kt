@@ -1,49 +1,51 @@
 package com.ezgieren.flixmoviedbverse.ui.components
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.ezgieren.flixmoviedbverse.data.model.Movie
 import com.ezgieren.flixmoviedbverse.presentation.viewmodel.MovieViewModel
-import com.ezgieren.flixmoviedbverse.ui.UIExtensions
-import com.ezgieren.flixmoviedbverse.ui.UIExtensions.CustomText
+import com.ezgieren.flixmoviedbverse.ui.UIExtensions.CustomTabRow
 import com.ezgieren.flixmoviedbverse.ui.UIExtensions.ErrorText
 import com.ezgieren.flixmoviedbverse.ui.UIExtensions.LoadingIndicator
-import com.ezgieren.flixmoviedbverse.ui.theme.AppColors
-import com.ezgieren.flixmoviedbverse.ui.theme.ChristmasColors
 import com.ezgieren.flixmoviedbverse.utils.Constants
 import com.ezgieren.flixmoviedbverse.utils.Resource
 
 @Composable
-fun MovieTabs(
-    viewModel: MovieViewModel,
-    navController: NavHostController
-) {
+fun MovieTabs(viewModel: MovieViewModel, navController: NavHostController) {
     val tabs = Constants.MovieCategories.getAllCategories()
-    val selectedTabIndex = remember { mutableStateOf(0) }
+    val selectedTabIndex = remember { mutableIntStateOf(0) }
 
     Column {
-        UIExtensions.CustomTabRow(
+        CustomTabRow(
             tabs = tabs,
-            selectedTabIndex = selectedTabIndex.value,
-            onTabSelected = { selectedTabIndex.value = it }
+            selectedTabIndex = selectedTabIndex.intValue,
+            onTabSelected = { selectedTabIndex.intValue = it }
         )
 
-        val selectedTab = tabs[selectedTabIndex.value]
-        when (selectedTab) {
-            Constants.MovieCategories.TRENDING -> TrendingMovies(viewModel, navController)
+        LaunchedEffect(selectedTabIndex.intValue) {
+            val selectedTab = tabs[selectedTabIndex.intValue]
+            if (selectedTab == Constants.MovieCategories.TRENDING) {
+                viewModel.fetchTrendingMovies()
+            }
+        }
+
+        when (tabs[selectedTabIndex.intValue]) {
+            Constants.MovieCategories.TRENDING -> TrendingMovies(
+                viewModel = viewModel,
+                isHolidayTheme = false,
+                onMovieClick = { movieId ->
+                    navController.navigate("${Constants.NavRoutes.MOVIE_DETAILS}/$movieId")
+                }
+            )
+
             else -> MovieListWithPagination(
-                category = selectedTab,
+                category = tabs[selectedTabIndex.intValue],
                 viewModel = viewModel,
                 onMovieClick = { movieId ->
                     navController.navigate("${Constants.NavRoutes.MOVIE_DETAILS}/$movieId")
@@ -54,8 +56,12 @@ fun MovieTabs(
 }
 
 @Composable
-fun TrendingMovies(viewModel: MovieViewModel, navController: NavHostController) {
-    val moviesState = viewModel.popularMovies.collectAsState()
+fun TrendingMovies(
+    viewModel: MovieViewModel,
+    isHolidayTheme: Boolean,
+    onMovieClick: (Int) -> Unit
+) {
+    val moviesState = viewModel.trendingMovies.collectAsState()
 
     when (val movies = moviesState.value) {
         is Resource.Loading -> {
@@ -68,25 +74,15 @@ fun TrendingMovies(viewModel: MovieViewModel, navController: NavHostController) 
 
         is Resource.Success -> {
             val moviesList = movies.data ?: emptyList()
-            Column {
-                // Favorite Movies Section
-                FavoriteMoviesSection(
-                    movies = moviesList.take(5),
-                    isHolidayTheme = true,
-                    onMovieClick = { movieId ->
-                        navController.navigate("${Constants.NavRoutes.MOVIE_DETAILS}/$movieId")
-                    }
-                )
-                LazyColumn {
-                    items(moviesList.size) { index ->
-                        val movie = moviesList[index]
-                        MovieCard(
-                            movie = movie,
-                            trend = Constants.GeneralMessages.TRENDING_IN_2024,
-                            isHolidayTheme = true,
-                            onClick = { navController.navigate("${Constants.NavRoutes.MOVIE_DETAILS}/${movie.id}") }
-                        )
-                    }
+            LazyColumn {
+                items(moviesList.size) { index ->
+                    val movie = moviesList[index]
+                    MovieCard(
+                        movie = movie,
+                        trend = if (index == 0) Constants.GeneralMessages.TRENDING_IN_2024 else "",
+                        isHolidayTheme = isHolidayTheme,
+                        onClick = onMovieClick
+                    )
                 }
             }
         }
@@ -124,34 +120,6 @@ fun MovieListWithPagination(
             }
 
             else -> Unit
-        }
-    }
-}
-
-@Composable
-fun FavoriteMoviesSection(
-    movies: List<Movie>,
-    isHolidayTheme: Boolean,
-    onMovieClick: (Int) -> Unit
-) {
-    Column(modifier = Modifier.padding(16.dp)) {
-        CustomText(
-            text = Constants.GeneralMessages.FAVORITE_MOVIES_2024,
-            style = MaterialTheme.typography.headlineMedium.copy(
-                fontWeight = FontWeight.Bold,
-                color = if (isHolidayTheme) ChristmasColors.HolidayPrimary else AppColors.Primary
-            ),
-            modifier = Modifier.padding(bottom = 16.dp)
-        )
-        LazyColumn {
-            items(movies.size) { index ->
-                MovieCard(
-                    movie = movies[index],
-                    trend = Constants.GeneralMessages.TRENDING_IN_2024,
-                    isHolidayTheme = isHolidayTheme,
-                    onClick = onMovieClick
-                )
-            }
         }
     }
 }

@@ -20,20 +20,22 @@ object Constants {
     }
 
     // API Endpoints
-    object Endpoints {
+    object ApiEndpoints {
         const val POPULAR_MOVIES = "movie/popular"
         const val MOVIE_DETAILS = "movie/{movie_id}"
         const val TOP_RATED_MOVIES = "movie/top_rated"
         const val UPCOMING_MOVIES = "movie/upcoming"
         const val NOW_PLAYING_MOVIES = "movie/now_playing"
-        const val TRENDING_MOVIES = "trending/movie/day"
+        const val TRENDING_MOVIES = "trending/movie/{time_window}"
         const val GENRES = "genre/movie/list"
         const val LANGUAGES = "configuration/languages"
     }
 
     object ApiParameters {
         const val PAGE = "page"
+        const val DAY = "day"
         const val MOVIE_ID = "movie_id"
+        const val TIME_WINDOW = "time_window"
     }
 
     //Movie Categories
@@ -43,6 +45,7 @@ object Constants {
         const val UPCOMING = "Upcoming"
         const val NOW_PLAYING = "Now Playing"
         const val TRENDING = "Trending"
+        const val INVALID_CATEGORY = "Invalid category"
 
         fun getAllCategories(): List<String> {
             return listOf(POPULAR, TOP_RATED, UPCOMING, NOW_PLAYING, TRENDING)
@@ -64,32 +67,14 @@ object Constants {
         }
     }
 
-    object MovieDetails {
-        const val TITLE = "Title: "
-        const val RELEASE_DATE = "Release Date: "
-        const val OVERVIEW = "Overview: "
-        const val GENRES = "Genres: "
-        const val LANGUAGE = "Language: "
-        const val POSTER_PATH = "Poster Path: "
-    }
-
-    object UiConstants {
-        const val DEFAULT_PADDING = 16
-        const val CORNER_RADIUS = 12
-    }
-
     // General Messages
     object GeneralMessages {
-        const val LOADING = "Loading movies..."
-        const val DETAILS = "Movie Details"
         const val FAVORITE_MOVIES_2024 = "\uD83C\uDF89🌟 Favorite Movies of 2024"
         const val TRENDING_IN_2024 = "Trending in 2024"
         const val HOLIDAY_THEME_ACTIVE = "🎄 Holiday Theme Active"
         const val NORMAL_THEME_ACTIVE = "✨ Normal Theme Active"
-        const val UNKNOWN_TITLE = "Unknown Title"
         const val NO_OVERVIEW = "No overview available."
         const val BACK = "Back"
-        const val MOVIE_DETAILS = "Movie Details"
         const val POSTER_DESCRIPTION = "Poster for %s"
     }
 }

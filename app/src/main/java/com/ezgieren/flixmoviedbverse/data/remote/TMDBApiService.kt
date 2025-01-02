@@ -11,40 +11,40 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface TMDBApiService {
-
-    @GET(Constants.Endpoints.POPULAR_MOVIES)
+    @GET(Constants.ApiEndpoints.POPULAR_MOVIES)
     suspend fun getPopularMovies(
-        @Query(Constants.ApiParameters.PAGE) page: Int = 1 // Default page is 1
+        @Query(Constants.ApiParameters.PAGE) page: Int = 1
     ): Response<PopularMoviesResponse>
 
-    @GET(Constants.Endpoints.TOP_RATED_MOVIES)
+    @GET(Constants.ApiEndpoints.TOP_RATED_MOVIES)
     suspend fun getTopRatedMovies(
-        @Query(Constants.ApiParameters.PAGE) page: Int = 1 // Default page is 1
+        @Query(Constants.ApiParameters.PAGE) page: Int = 1
     ): Response<PopularMoviesResponse>
 
-    @GET(Constants.Endpoints.UPCOMING_MOVIES)
+    @GET(Constants.ApiEndpoints.UPCOMING_MOVIES)
     suspend fun getUpcomingMovies(
-        @Query(Constants.ApiParameters.PAGE) page: Int = 1 // Default page is 1
+        @Query(Constants.ApiParameters.PAGE) page: Int = 1
     ): Response<PopularMoviesResponse>
 
-    @GET(Constants.Endpoints.NOW_PLAYING_MOVIES)
+    @GET(Constants.ApiEndpoints.NOW_PLAYING_MOVIES)
     suspend fun getNowPlayingMovies(
-        @Query(Constants.ApiParameters.PAGE) page: Int = 1 // Default page is 1
+        @Query(Constants.ApiParameters.PAGE) page: Int = 1
     ): Response<PopularMoviesResponse>
 
-    @GET(Constants.Endpoints.TRENDING_MOVIES)
+    @GET(Constants.ApiEndpoints.TRENDING_MOVIES)
     suspend fun getTrendingMovies(
-        @Query(Constants.ApiParameters.PAGE) page: Int = 1 // Default page is 1
+        @Path(Constants.ApiParameters.TIME_WINDOW) timeWindow: String = Constants.ApiParameters.DAY,
+        @Query(Constants.ApiParameters.PAGE) page: Int = 1
     ): Response<PopularMoviesResponse>
 
-    @GET(Constants.Endpoints.MOVIE_DETAILS)
+    @GET(Constants.ApiEndpoints.MOVIE_DETAILS)
     suspend fun getMovieDetails(
         @Path(Constants.ApiParameters.MOVIE_ID) movieId: Int
     ): Response<MovieDetails>
 
-    @GET(Constants.Endpoints.GENRES)
+    @GET(Constants.ApiEndpoints.GENRES)
     suspend fun getGenres(): Response<GenresResponse>
 
-    @GET(Constants.Endpoints.LANGUAGES)
+    @GET(Constants.ApiEndpoints.LANGUAGES)
     suspend fun getLanguages(): Response<List<SpokenLanguage>>
 }

@@ -5,10 +5,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
 object ChristmasColors {
-    val Red = Color(0xFFD32F2F)
-    val Gold = Color(0xFFFFD700)
-    val Green = Color(0xFF4CAF50)
-    val Background = Color(0xFFFFFDE7)
+    val Red = Color(0xFF990000)
+    val Gold = Color(0xFFFFC107)
+    val Green = Color(0xFF1B5E20)
+    val Background = Color(0xFFE8F5E9)
     val HolidayPrimary = Red
     val HolidayBackground = Background
 }
@@ -17,4 +17,6 @@ object AppColors {
     val Primary: Color @Composable get() = MaterialTheme.colorScheme.primary
     val OnPrimary: Color @Composable get() = MaterialTheme.colorScheme.onPrimary
     val Background: Color @Composable get() = MaterialTheme.colorScheme.background
+    val Surface: Color @Composable get() = MaterialTheme.colorScheme.surface
+    val OnSurface: Color @Composable get() = MaterialTheme.colorScheme.onSurface
 }

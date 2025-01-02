@@ -5,6 +5,7 @@ import com.ezgieren.flixmoviedbverse.data.model.Genre
 import com.ezgieren.flixmoviedbverse.data.model.Movie
 import com.ezgieren.flixmoviedbverse.data.model.MovieDetails
 import com.ezgieren.flixmoviedbverse.data.model.SpokenLanguage
+import com.ezgieren.flixmoviedbverse.utils.Constants
 import com.ezgieren.flixmoviedbverse.utils.Resource
 
 interface MovieRepository {
@@ -12,7 +13,7 @@ interface MovieRepository {
     suspend fun getTopRatedMovies(): Resource<List<Movie>>
     suspend fun getUpcomingMovies(): Resource<List<Movie>>
     suspend fun getNowPlayingMovies(): Resource<List<Movie>>
-    suspend fun getTrendingMovies(): Resource<List<Movie>>
+    suspend fun getTrendingMovies(timeWindow: String = Constants.ApiParameters.DAY): Resource<List<Movie>>
     suspend fun getMovieDetails(movieId: Int): Resource<MovieDetails>
     suspend fun getGenres(): Resource<List<Genre>>
     suspend fun getLanguages(): Resource<List<SpokenLanguage>>

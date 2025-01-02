@@ -62,12 +62,11 @@ class MovieRepositoryImpl @Inject constructor(
     }
 
     // Fetch trending movies
-    override suspend fun getTrendingMovies(): Resource<List<Movie>> {
-        return fetchMoviesData(
-            apiCall = { apiService.getTrendingMovies() },
-            cacheCall = { movieDao.getAllMovies().map { it.toDomain() } },
-            saveToCache = { movieDao.insertMovies(it.map { movie -> movie.toEntity() }) },
-            transform = { response -> response?.results ?: emptyList() }
+    override suspend fun getTrendingMovies(timeWindow: String): Resource<List<Movie>> {
+        return safeApiCall(
+            apiCall = { apiService.getTrendingMovies(timeWindow = timeWindow, page = 1) },
+            onSuccess = { it.results },
+            onFailure = { Constants.ErrorMessages.GENERIC_ERROR }
         )
     }
 
@@ -84,7 +83,7 @@ class MovieRepositoryImpl @Inject constructor(
     override suspend fun getGenres(): Resource<List<Genre>> {
         return safeApiCall(
             apiCall = { apiService.getGenres() },
-            onSuccess = { it?.genres ?: emptyList() }, // GenresResponse -> List<Genre>
+            onSuccess = { it.genres }, // GenresResponse -> List<Genre>
             onFailure = { Constants.ErrorMessages.GENERIC_ERROR }
         )
     }

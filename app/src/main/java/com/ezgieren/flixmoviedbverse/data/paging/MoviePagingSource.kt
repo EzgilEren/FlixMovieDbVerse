@@ -8,22 +8,22 @@ import com.ezgieren.flixmoviedbverse.utils.Constants
 
 class MoviePagingSource(
     private val apiService: TMDBApiService,
-    private val category: String
+    private val category: String,
+    private val timeWindow: String = Constants.ApiParameters.DAY // default "day"
 ) : PagingSource<Int, Movie>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
+        val page = params.key ?: 1
         return try {
-            val page = params.key ?: 1 // if `page` is not found,start to page 1.
             val response = when (category) {
                 Constants.MovieCategories.POPULAR -> apiService.getPopularMovies(page)
                 Constants.MovieCategories.TOP_RATED -> apiService.getTopRatedMovies(page)
                 Constants.MovieCategories.UPCOMING -> apiService.getUpcomingMovies(page)
                 Constants.MovieCategories.NOW_PLAYING -> apiService.getNowPlayingMovies(page)
-                Constants.MovieCategories.TRENDING -> apiService.getTrendingMovies(page)
-                else -> throw IllegalArgumentException("Invalid category")
+                Constants.MovieCategories.TRENDING -> apiService.getTrendingMovies(timeWindow, page)
+                else -> throw IllegalArgumentException("${Constants.MovieCategories.INVALID_CATEGORY}: $category")
             }
-            val movies = response.body()?.results ?: emptyList()
-
+            val movies = response.body()?.results.orEmpty()
             LoadResult.Page(
                 data = movies,
                 prevKey = if (page == 1) null else page - 1,

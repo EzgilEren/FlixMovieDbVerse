@@ -30,7 +30,16 @@ private val DarkColorScheme = darkColorScheme(
     error = Color(0xFFCF6679),
     onError = Color.Black
 )
-
+private val HolidayDarkColorScheme = darkColorScheme(
+    primary = ChristmasColors.Red,
+    onPrimary = Color.Black,
+    background = Color(0xFF121212),
+    surface = ChristmasColors.Green,
+    onBackground = ChristmasColors.Gold,
+    onSurface = Color.White,
+    error = Color(0xFFD32F2F),
+    onError = Color.Black
+)
 private val HolidayColorScheme = lightColorScheme(
     primary = ChristmasColors.Red,
     onPrimary = Color.White,
@@ -42,17 +51,6 @@ private val HolidayColorScheme = lightColorScheme(
     onError = Color.White
 )
 
-private val HolidayDarkColorScheme = darkColorScheme(
-    primary = ChristmasColors.Red,
-    onPrimary = Color.Black,
-    background = Color(0xFF121212),
-    surface = ChristmasColors.Green,
-    onBackground = ChristmasColors.Gold,
-    onSurface = Color.White,
-    error = Color(0xFFD32F2F),
-    onError = Color.Black
-)
-
 @Composable
 fun FlixMovieDbVerseTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -61,7 +59,7 @@ fun FlixMovieDbVerseTheme(
 ) {
     val colorScheme = when {
         isHolidayTheme -> HolidayColorScheme
-        darkTheme -> HolidayDarkColorScheme
+        darkTheme -> HolidayColorScheme
         else -> LightColorScheme
     }
 

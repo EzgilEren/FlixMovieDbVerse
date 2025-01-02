@@ -19,6 +19,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -58,12 +59,10 @@ fun MovieDetailScreen(
 
         is Resource.Success -> {
             movieDetails.data?.let { movie ->
-                Box(
-                    modifier = Modifier.fillMaxSize()
-                ) {
+                Box(modifier = Modifier.fillMaxSize()) {
                     if (isHolidayTheme) {
                         SnowflakeBackground(
-                            isHolidayTheme = isHolidayTheme,
+                            isHolidayTheme = true,
                             modifier = Modifier.fillMaxSize()
                         )
                     }
@@ -78,7 +77,7 @@ fun MovieDetailScreen(
                                 text = Constants.GeneralMessages.BACK,
                                 onClick = onBackPressed,
                                 backgroundColor = if (isHolidayTheme) ChristmasColors.Red else AppColors.Primary,
-                                textColor = AppColors.OnPrimary
+                                textColor = Color.White
                             )
                             SpacerHeight(16.dp)
                         }
@@ -91,7 +90,8 @@ fun MovieDetailScreen(
                                 ),
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .height(250.dp)
+                                    .height(300.dp)
+                                    .clip(MaterialTheme.shapes.medium)
                             )
                             SpacerHeight(16.dp)
                         }
@@ -110,6 +110,7 @@ fun MovieDetailScreen(
                             CustomText(
                                 text = movie.overview ?: Constants.GeneralMessages.NO_OVERVIEW,
                                 style = MaterialTheme.typography.bodyLarge,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 textAlign = TextAlign.Justify
                             )
                         }
@@ -169,8 +170,8 @@ data class Snowflake(
         fun random(): Snowflake {
             return Snowflake(
                 x = nextFloat(),
-                size = nextFloat() * 10 + 5, // snow size
-                speed = nextFloat() * 5000 + 5000, // snow speed (ms)
+                size = nextFloat() * 8 + 4,
+                speed = nextFloat() * 4000 + 3000,
                 color = Color.White
             )
         }
