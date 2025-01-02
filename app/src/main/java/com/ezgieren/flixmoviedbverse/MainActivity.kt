@@ -9,13 +9,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.SwitchDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -26,19 +24,13 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.ezgieren.flixmoviedbverse.data.model.Movie
 import com.ezgieren.flixmoviedbverse.presentation.viewmodel.MovieViewModel
 import com.ezgieren.flixmoviedbverse.ui.UIExtensions.CustomText
-import com.ezgieren.flixmoviedbverse.ui.UIExtensions.ErrorText
-import com.ezgieren.flixmoviedbverse.ui.UIExtensions.LoadingIndicator
-import com.ezgieren.flixmoviedbverse.ui.components.MovieCard
 import com.ezgieren.flixmoviedbverse.ui.components.MovieDetailScreen
 import com.ezgieren.flixmoviedbverse.ui.components.MovieTabs
-import com.ezgieren.flixmoviedbverse.ui.theme.AppColors
 import com.ezgieren.flixmoviedbverse.ui.theme.ChristmasColors
 import com.ezgieren.flixmoviedbverse.ui.theme.FlixMovieDbVerseTheme
 import com.ezgieren.flixmoviedbverse.utils.Constants
-import com.ezgieren.flixmoviedbverse.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -107,16 +99,16 @@ class MainActivity : ComponentActivity() {
             CustomText(
                 text = if (isHolidayTheme) Constants.GeneralMessages.HOLIDAY_THEME_ACTIVE else Constants.GeneralMessages.NORMAL_THEME_ACTIVE,
                 style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
-                modifier = Modifier.weight(1f),
-                color = if (isHolidayTheme) ChristmasColors.Red else MaterialTheme.colorScheme.onSurface
+                color = if (isHolidayTheme) ChristmasColors.Gold else MaterialTheme.colorScheme.onSurface,
+                modifier = Modifier.weight(1f)
             )
             Switch(
                 checked = isHolidayTheme,
                 onCheckedChange = { onThemeChange(it) },
                 colors = SwitchDefaults.colors(
-                    checkedThumbColor = ChristmasColors.Red,
+                    checkedThumbColor = ChristmasColors.BrightRed,
                     uncheckedThumbColor = MaterialTheme.colorScheme.onSurface,
-                    checkedTrackColor = ChristmasColors.Gold.copy(alpha = 0.5f),
+                    checkedTrackColor = ChristmasColors.SoftGold.copy(alpha = 0.6f),
                     uncheckedTrackColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
                 )
             )

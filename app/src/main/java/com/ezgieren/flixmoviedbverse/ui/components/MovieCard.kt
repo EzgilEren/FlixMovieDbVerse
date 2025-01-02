@@ -21,7 +21,6 @@ import com.ezgieren.flixmoviedbverse.data.model.Movie
 import com.ezgieren.flixmoviedbverse.ui.UIExtensions.CustomImage
 import com.ezgieren.flixmoviedbverse.ui.UIExtensions.CustomText
 import com.ezgieren.flixmoviedbverse.ui.UIExtensions.SpacerHeight
-import com.ezgieren.flixmoviedbverse.ui.theme.AppColors
 import com.ezgieren.flixmoviedbverse.ui.theme.ChristmasColors
 import com.ezgieren.flixmoviedbverse.utils.Constants
 
@@ -38,17 +37,17 @@ fun MovieCard(
             .padding(16.dp)
             .clickable { onClick(movie.id) },
         shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(6.dp),
+        elevation = CardDefaults.cardElevation(12.dp),
         colors = CardDefaults.cardColors(
-            containerColor = if (isHolidayTheme) ChristmasColors.HolidayBackground else AppColors.Background
+            containerColor = if (isHolidayTheme) ChristmasColors.CardBackground else MaterialTheme.colorScheme.surface
         )
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             if (trend.isNotEmpty()) {
                 CustomText(
                     text = trend,
-                    style = MaterialTheme.typography.labelMedium.copy(
-                        color = if (isHolidayTheme) ChristmasColors.Gold else AppColors.Primary,
+                    style = MaterialTheme.typography.labelLarge.copy(
+                        color = if (isHolidayTheme) ChristmasColors.Gold else MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.Bold
                     ),
                     modifier = Modifier.padding(bottom = 8.dp)
@@ -59,8 +58,8 @@ fun MovieCard(
                     imageUrl = "${Constants.IMAGE_BASE_URL}${movie.posterPath.orEmpty()}",
                     contentDescription = Constants.GeneralMessages.POSTER_DESCRIPTION.format(movie.title),
                     modifier = Modifier
-                        .width(100.dp)
-                        .height(150.dp)
+                        .width(120.dp)
+                        .height(160.dp)
                         .clip(RoundedCornerShape(12.dp))
                 )
                 Column(modifier = Modifier.padding(start = 16.dp)) {
@@ -68,7 +67,7 @@ fun MovieCard(
                         text = movie.title,
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold,
-                        color = if (isHolidayTheme) ChristmasColors.Red else AppColors.Primary
+                        color = if (isHolidayTheme) ChristmasColors.BrightRed else MaterialTheme.colorScheme.primary
                     )
                     SpacerHeight(8.dp)
                     CustomText(

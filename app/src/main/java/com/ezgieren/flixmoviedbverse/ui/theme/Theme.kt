@@ -5,62 +5,47 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
-private val LightColorScheme = lightColorScheme(
-    primary = Color(0xFF6200EE),
-    secondary = Color(0xFF03DAC6),
-    background = Color(0xFFFDFDFD),
-    surface = Color(0xFFFFFFFF),
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    error = Color(0xFFB00020),
-    onError = Color.White
-)
-
-private val DarkColorScheme = darkColorScheme(
-    primary = Color(0xFFBB86FC),
-    secondary = Color(0xFF03DAC6),
-    background = Color(0xFF121212),
-    surface = Color(0xFF1E1E1E),
-    onPrimary = Color.Black,
-    onSecondary = Color.White,
-    onBackground = Color.White,
-    onSurface = Color.White,
-    error = Color(0xFFCF6679),
-    onError = Color.Black
-)
-private val HolidayDarkColorScheme = darkColorScheme(
-    primary = ChristmasColors.Red,
-    onPrimary = Color.Black,
-    background = Color(0xFF121212),
-    surface = ChristmasColors.Green,
-    onBackground = ChristmasColors.Gold,
-    onSurface = Color.White,
-    error = Color(0xFFD32F2F),
-    onError = Color.Black
-)
-private val HolidayColorScheme = lightColorScheme(
-    primary = ChristmasColors.Red,
-    onPrimary = Color.White,
-    background = ChristmasColors.Background,
-    surface = ChristmasColors.Green,
-    onBackground = ChristmasColors.Red,
-    onSurface = ChristmasColors.Gold,
-    error = Color(0xFFD32F2F),
-    onError = Color.White
-)
-
 @Composable
 fun FlixMovieDbVerseTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
     isHolidayTheme: Boolean = false,
+    darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        isHolidayTheme -> HolidayColorScheme
-        darkTheme -> HolidayColorScheme
-        else -> LightColorScheme
+    val colorScheme = if (isHolidayTheme) {
+        darkColorScheme(
+            primary = ChristmasColors.BrightRed,
+            onPrimary = ChristmasColors.SnowWhite,
+            secondary = ChristmasColors.Gold,
+            onSecondary = ChristmasColors.SnowWhite,
+            background = ChristmasColors.DeepGreen,
+            onBackground = ChristmasColors.SoftGold,
+            surface = ChristmasColors.CardBackground,
+            onSurface = ChristmasColors.Gold
+        )
+    } else {
+        if (darkTheme) {
+            darkColorScheme(
+                primary = Color(0xFF90CAF9),
+                onPrimary = Color.Black,
+                secondary = Color(0xFFA5D6A7),
+                onSecondary = Color.Black,
+                background = Color(0xFF263238),
+                onBackground = Color.White,
+                surface = Color(0xFF37474F),
+                onSurface = Color.White
+            )
+        } else {
+            lightColorScheme(
+                primary = Color(0xFF1E88E5),
+                onPrimary = Color.White,
+                secondary = Color(0xFF43A047),
+                onSecondary = Color.White,
+                background = Color(0xFFF5F5F5),
+                onBackground = Color.Black,
+                surface = Color.White,
+                onSurface = Color(0xFF37474F)
+            )
+        }
     }
 
     MaterialTheme(
