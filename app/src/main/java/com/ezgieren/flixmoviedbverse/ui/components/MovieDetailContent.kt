@@ -1,12 +1,14 @@
 package com.ezgieren.flixmoviedbverse.ui.components
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.ezgieren.flixmoviedbverse.presentation.viewmodel.MovieViewModel
@@ -17,9 +19,13 @@ import com.ezgieren.flixmoviedbverse.utils.Constants
 import com.ezgieren.flixmoviedbverse.utils.Resource
 
 @Composable
-fun MovieTabs(viewModel: MovieViewModel, navController: NavHostController) {
+fun MovieTabs(viewModel: MovieViewModel, navController: NavHostController, isHolidayTheme: Boolean) {
     val tabs = Constants.MovieCategories.getAllCategories()
     val selectedTabIndex = remember { mutableIntStateOf(0) }
+
+    if (isHolidayTheme) {
+        SnowflakeBackground(modifier = Modifier.fillMaxSize())
+    }
 
     Column {
         CustomTabRow(

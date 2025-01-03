@@ -19,17 +19,14 @@ import kotlin.random.Random.Default.nextFloat
 @Composable
 fun SnowflakeBackground(modifier: Modifier = Modifier) {
     val snowflakes = remember { List(150) { Snowflake.random() } }
-    val infiniteTransition = rememberInfiniteTransition(label = "")
+    val infiniteTransition = rememberInfiniteTransition()
 
     val animationOffsets = snowflakes.map { snowflake ->
         infiniteTransition.animateFloat(
             initialValue = 0f,
             targetValue = 1f,
             animationSpec = infiniteRepeatable(
-                animation = tween(
-                    durationMillis = (snowflake.speed * 1.5).toInt(),
-                    easing = LinearEasing
-                ),
+                animation = tween(durationMillis = snowflake.speed.toInt(), easing = LinearEasing),
                 repeatMode = RepeatMode.Restart
             ), label = ""
         )
@@ -60,9 +57,9 @@ data class Snowflake(
         fun random(): Snowflake {
             return Snowflake(
                 x = nextFloat(),
-                size = nextFloat() * 8 + 4,
+                size = nextFloat() * 6 + 4,
                 speed = nextFloat() * 3000 + 2000,
-                color = listOf(ChristmasColors.SnowWhite, ChristmasColors.Gold).random()
+                color = ChristmasColors.SnowWhite
             )
         }
     }

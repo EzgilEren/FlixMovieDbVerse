@@ -40,7 +40,7 @@ fun MovieDetailScreen(
 
     when (val movieDetails = viewModel.movieDetails.collectAsState().value) {
         is Resource.Loading -> {
-         LoadingIndicator()
+            LoadingIndicator()
         }
 
         is Resource.Error -> {
@@ -71,9 +71,9 @@ fun MovieDetailScreen(
                                 text = Constants.GeneralMessages.BACK,
                                 onClick = onBackPressed,
                                 backgroundColor = if (isHolidayTheme) ChristmasColors.BrightRed else AppColors.Primary,
-                                textColor = ChristmasColors.SoftGold
+                                textColor = ChristmasColors.Gold
                             )
-                            SpacerHeight(16.dp)
+                            SpacerHeight()
                         }
 
                         item {
@@ -85,7 +85,7 @@ fun MovieDetailScreen(
                                     .height(300.dp)
                                     .clip(MaterialTheme.shapes.medium)
                             )
-                            SpacerHeight(16.dp)
+                            SpacerHeight()
                         }
 
                         item {
@@ -95,7 +95,7 @@ fun MovieDetailScreen(
                                 color = if (isHolidayTheme) ChristmasColors.BrightRed else AppColors.Primary,
                                 fontWeight = FontWeight.Bold,
                             )
-                            SpacerHeight(8.dp)
+                            SpacerHeight()
                         }
 
                         item {

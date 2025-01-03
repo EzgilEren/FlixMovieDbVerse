@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -30,10 +31,34 @@ import coil.compose.AsyncImage
 import com.ezgieren.flixmoviedbverse.ui.theme.AppColors
 
 object UIExtensions {
-    // **Custom Spacer**
+    object UiConstants {
+        // Paddings
+        val PaddingSmall = 8.dp
+        val PaddingNormal = 16.dp
+        val PaddingLarge = 24.dp
+
+        // Image Dimensions
+        val ImageWidth = 120.dp
+        val ImageHeight = 180.dp
+
+        // Other Dimensions
+        val CornerRadius = 12.dp
+        val CardElevation = 6.dp
+    }
+    // **Custom Spacers**
     @Composable
-    fun SpacerHeight(height: Dp) {
-        Spacer(modifier = Modifier.height(height))
+    fun SpacerSmall() {
+        Spacer(modifier = Modifier.height(UiConstants.PaddingSmall))
+    }
+
+    @Composable
+    fun SpacerNormal() {
+        Spacer(modifier = Modifier.height(UiConstants.PaddingNormal))
+    }
+
+    @Composable
+    fun SpacerHeight() {
+        Spacer(modifier = Modifier.height(UiConstants.PaddingLarge))
     }
 
     // **Custom Button**
@@ -71,7 +96,7 @@ object UIExtensions {
     fun CustomText(
         text: String,
         modifier: Modifier = Modifier,
-        style: androidx.compose.ui.text.TextStyle = MaterialTheme.typography.bodyLarge,
+        style: TextStyle = MaterialTheme.typography.bodyLarge,
         color: Color = AppColors.Primary,
         textAlign: TextAlign = TextAlign.Start,
         fontWeight: FontWeight? = null,
@@ -125,8 +150,8 @@ object UIExtensions {
         ScrollableTabRow(
             selectedTabIndex = selectedTabIndex,
             edgePadding = 0.dp,
-            containerColor = MaterialTheme.colorScheme.background,
-            contentColor = MaterialTheme.colorScheme.primary
+            containerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
+            contentColor = MaterialTheme.colorScheme.surfaceVariant
         ) {
             tabs.forEachIndexed { index, tab ->
                 Tab(

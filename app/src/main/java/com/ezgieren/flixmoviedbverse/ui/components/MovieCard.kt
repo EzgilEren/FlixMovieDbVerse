@@ -20,7 +20,6 @@ import androidx.compose.ui.unit.dp
 import com.ezgieren.flixmoviedbverse.data.model.Movie
 import com.ezgieren.flixmoviedbverse.ui.UIExtensions.CustomImage
 import com.ezgieren.flixmoviedbverse.ui.UIExtensions.CustomText
-import com.ezgieren.flixmoviedbverse.ui.UIExtensions.SpacerHeight
 import com.ezgieren.flixmoviedbverse.ui.theme.ChristmasColors
 import com.ezgieren.flixmoviedbverse.utils.Constants
 
@@ -39,14 +38,14 @@ fun MovieCard(
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(12.dp),
         colors = CardDefaults.cardColors(
-            containerColor = if (isHolidayTheme) ChristmasColors.CardBackground else MaterialTheme.colorScheme.surface
+            containerColor = if (isHolidayTheme) ChristmasColors.MidnightBlue else MaterialTheme.colorScheme.surface
         )
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             if (trend.isNotEmpty()) {
                 CustomText(
                     text = trend,
-                    style = MaterialTheme.typography.labelLarge.copy(
+                    style = MaterialTheme.typography.bodyLarge.copy(
                         color = if (isHolidayTheme) ChristmasColors.Gold else MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.Bold
                     ),
@@ -59,17 +58,16 @@ fun MovieCard(
                     contentDescription = Constants.GeneralMessages.POSTER_DESCRIPTION.format(movie.title),
                     modifier = Modifier
                         .width(120.dp)
-                        .height(160.dp)
-                        .clip(RoundedCornerShape(12.dp))
+                        .height(180.dp)
+                        .clip(RoundedCornerShape(8.dp))
                 )
                 Column(modifier = Modifier.padding(start = 16.dp)) {
                     CustomText(
                         text = movie.title,
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold,
-                        color = if (isHolidayTheme) ChristmasColors.BrightRed else MaterialTheme.colorScheme.primary
+                        color = if (isHolidayTheme) ChristmasColors.Gold else MaterialTheme.colorScheme.primary
                     )
-                    SpacerHeight(8.dp)
                     CustomText(
                         text = movie.overview.orEmpty(),
                         style = MaterialTheme.typography.bodyMedium,

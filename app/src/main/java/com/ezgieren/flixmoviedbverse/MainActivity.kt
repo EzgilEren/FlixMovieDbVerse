@@ -68,7 +68,8 @@ class MainActivity : ComponentActivity() {
             composable(Constants.NavRoutes.MOVIE_LIST) {
                 MovieTabs(
                     viewModel = viewModel,
-                    navController = navController
+                    navController = navController,
+                    isHolidayThemeEnabled
                 )
             }
             composable("${Constants.NavRoutes.MOVIE_DETAILS}/{movieId}") { backStackEntry ->
@@ -78,7 +79,7 @@ class MainActivity : ComponentActivity() {
                         movieId = movieId,
                         viewModel = viewModel,
                         onBackPressed = { navController.popBackStack() },
-                        isHolidayThemeEnabled
+                        isHolidayTheme = isHolidayThemeEnabled
                     )
                 }
             }
@@ -98,9 +99,9 @@ class MainActivity : ComponentActivity() {
         ) {
             CustomText(
                 text = if (isHolidayTheme) Constants.GeneralMessages.HOLIDAY_THEME_ACTIVE else Constants.GeneralMessages.NORMAL_THEME_ACTIVE,
-                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
+                style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
                 color = if (isHolidayTheme) ChristmasColors.Gold else MaterialTheme.colorScheme.onSurface,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(3f)
             )
             Switch(
                 checked = isHolidayTheme,
@@ -108,7 +109,7 @@ class MainActivity : ComponentActivity() {
                 colors = SwitchDefaults.colors(
                     checkedThumbColor = ChristmasColors.BrightRed,
                     uncheckedThumbColor = MaterialTheme.colorScheme.onSurface,
-                    checkedTrackColor = ChristmasColors.SoftGold.copy(alpha = 0.6f),
+                    checkedTrackColor = ChristmasColors.SoftGold.copy(alpha = 0.5f),
                     uncheckedTrackColor = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f)
                 )
             )
